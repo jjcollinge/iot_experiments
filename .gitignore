@@ -1,0 +1,33 @@
+# Log files
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# node-waf configuration
+.lock-wscript
+
+# Complied binary addons
+build/Release
+
+# Dependency directory
+node_modules
+
+# Coveralls
+coverage
+
+# Linux
+.directory
+*~
+
+# Date files
+*.csv
+*.dat
+*.out
+*.gz
+
+# ino
+.build

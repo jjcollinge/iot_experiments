@@ -1,0 +1,40 @@
+html
+    head    
+        title= "IoT Experiment"
+        link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        script(type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+        script(src='/socket.io/socket.io.js')
+    
+body
+    span(class="glyphicon glyphicon-cloud")
+    |  Current temperature
+    p#temp
+    span(class="glyphicon glyphicon-certificate")
+    |  Light
+    p#light
+    button#ledBtn(class="btn btn-primary" type='submit') Toggle
+
+script.
+    var temp = 0
+    var socket = io.connect('http://10.108.196.225:8080');
+    socket.on('message', function(data){
+        temp= data;
+        console.log(data);
+        $(document).ready(function(){
+            $("#temp").html(data + " &degC");
+        });
+    });
+    var ledState = false;
+    $(document).ready(function() {
+        $("#ledBtn").click(function(){
+            ledState = !ledState;
+            console.log("LED button clicked: " + ledState);
+            socket.emit('led_data', { state: ledState });
+            if(ledState){
+                $("#light").html("ON");
+            } else {
+                $("#light").html("OFF");
+            }
+        });
+    });
